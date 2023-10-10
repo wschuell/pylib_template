@@ -4,44 +4,42 @@ import os
 
 libname = None
 if libname is None:
-	libname = input('Please enter libname or modify it in deploy_pylib.py:')
+    libname = input("Please enter libname or modify it in deploy_pylib.py:")
 
 
-for filename in ('setup.py','MANIFEST.in','bump_version.sh'):
-	with open(filename,'r') as f:
-		txt = f.read()
+for filename in ("setup.py", "MANIFEST.in", "bump_version.sh"):
+    with open(filename, "r") as f:
+        txt = f.read()
 
-	txt2 = libname.join(txt.split('PYLIB'))
+    txt2 = libname.join(txt.split("PYLIB"))
 
-	with open(filename,'w') as f:
-		f.write(txt2)
+    with open(filename, "w") as f:
+        f.write(txt2)
 
 
-
-print('Edit setup.py if you want to provide URL, author info, and description')
+print("Edit setup.py if you want to provide URL, author info, and description")
 
 cmd_list = [
-		'git add PYLIB/__init__.py',
-		'git add PYLIB/_version.py',
-		'git mv PYLIB '+libname,
-		'git add tests/testmodule/__init__.py',
-		'git add tests/testmodule/test_basic.py',
-		'git add .gitignore',
-		'git add .travis.yml',
-		'git add pytest.ini',
-		'git add setup.py',
-		'git add requirements.txt',
-		"git commit -am 'Deploying_pylib'",
-
-		]
+    "git add PYLIB/__init__.py",
+    "git add PYLIB/_version.py",
+    "git mv PYLIB " + libname,
+    "git add tests/testmodule/__init__.py",
+    "git add tests/testmodule/test_basic.py",
+    "git add .gitignore",
+    "git add .travis.yml",
+    "git add pytest.ini",
+    "git add setup.py",
+    "git add requirements.txt",
+    "git commit -am 'Deploying_pylib'",
+]
 
 for cmd in cmd_list:
-	print('--------------')
-	print(cmd)
-	print('')
-	cmd2 = cmd.split(' ')
-	ans = subprocess.check_output(cmd2)
-	print(ans)
+    print("--------------")
+    print(cmd)
+    print("")
+    cmd2 = cmd.split(" ")
+    ans = subprocess.check_output(cmd2)
+    print(ans)
 
 
 print("To finish the process, you can execute 'git rm deploy_pylib.py'")
